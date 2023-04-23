@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #form-1,
+        #from-2{
+            padding: 0 0 10px 0;
+        }
+        label{
+            font-size: 1.2em;
+            font-weight: 400;
+            color: #555;
+        }
+        input{
+            height: 30px;
+            border: none;
+            border: 1px solid #b3b3b3;
+            border-radius: 2px;
+            outline: none;
+        }
+        input:hover{
+            border-color: #04AA6D;
+        }
+        button{
+            background-color: #04AA6D;
+            height: 35px;
+            margin: 0 0 0 10px;
+            border: none;
+            border-radius: 5px;
+
+            width: 100px;
+        }
+        button:hover{
+            background-color: #059862;
+        }
+        .validate{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="form-1">
+        <label for="num">Nhập tuổi:</label>
+        <br>
+        <input type="text" name="" id="num" placeholder="VD:19">
+        <button class="btn">Submit!</button>
+        <div class="messages"></div>
+    </div>
+    <div id="from-2">
+        <label for="char">Nhập tên:</label>
+        <br>
+        <input type="text" name="" id="char" placeholder="VD:Hoàng">
+        <button class="btn">Submit!</button>
+        <div class="messages"></div>
+    </div>
+
+
+    <script>
+        function checkInput(){
+            var $ = document.querySelector.bind(document);
+            var $$ = document.querySelectorAll.bind(document);
+            var btns = $$('.btn')
+
+            btns.forEach(btn => {
+                btn.addEventListener('click',function(){
+                    const element = this;
+                    const input = element.parentElement.querySelector('input');
+                    let value = input.value
+                    if(value.trim() == ''){
+                        element.parentElement.querySelector('.messages').innerHTML = "Không được để trống!";
+                        element.parentElement.querySelector('.messages').classList.add('validate');
+                    }
+                    else {
+                        if(element.parentElement.querySelector('#num')){
+                            if(/\D/g.test(value)){
+                                element.parentElement.querySelector('.messages').innerHTML = "Trường này chỉ được nhập số!";
+                                element.parentElement.querySelector('.messages').classList.add('validate');
+                            }
+                            else{
+                                let valueNmb = Number(value);
+                                if(valueNmb < 0 || valueNmb > 100){
+                                    element.parentElement.querySelector('.messages').innerHTML = "Tuổi quá lớn!";
+                                element.parentElement.querySelector('.messages').classList.add('validate');
+                                }
+                                else{
+                                    element.parentElement.querySelector('.messages').innerHTML = "";
+                                    element.parentElement.querySelector('.messages').classList.remove('validate');
+                                }
+                            }
+                        }
+                        else{
+                            if(/\d/g.test(value)){
+                                element.parentElement.querySelector('.messages').innerHTML = "Tên không được thêm số nhập số!";
+                                element.parentElement.querySelector('.messages').classList.add('validate');
+                            }
+                            else{
+                                element.parentElement.querySelector('.messages').innerHTML = "";
+                                element.parentElement.querySelector('.messages').classList.remove('validate');
+                            }
+                        }
+                    }
+                })
+                
+                
+            });
+        }
+        checkInput();
+
+        arrNumberphones = ['098-723-723','892-623-922','783.234.892','233.234.234',
+        '234,234,222','233,443,324','234 123 432','123322223','123211321']
+        console.log(arrNumberphones);
+        newArr = arrNumberphones.map(function(phone){
+            return phone.replace(/\D/g,"");
+        })
+        console.log(newArr);
+       
+    </script>
+</body>
+
+</html>
